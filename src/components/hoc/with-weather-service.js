@@ -16,3 +16,5 @@ const withWeatherService = () => (Wrapped) => {
     );
   }
 };
+
+export default withWeatherService;

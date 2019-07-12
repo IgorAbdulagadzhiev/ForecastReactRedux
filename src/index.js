@@ -1,20 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router} from 'react-router-dom';
+
 import App from './components/app';
+import ErrorBoundry from './components/error-boundry';
+import WeatherService from './services/weather-service';
+import { WeatherServiceProvider } from './components/weather-service-context';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import store from './store';
 
-const res = async () => {
-  return await fetch(`/api/location/44418/`);
-}
+const weatherService = new WeatherService();
 
-
-
-res().then((data) => {
-  console.log(data);
-  return data.json();
-}).then((data) => {
-  console.log(data)
-}).catch((error) => {
-  console.log(error);
-})
+ReactDOM.render(
+  <Provider store={store}>
+    <ErrorBoundry>
+      <WeatherServiceProvider value={weatherService}>
+        <Router>
+          <App/>
+        </Router>
+      </WeatherServiceProvider>
+    </ErrorBoundry>
+  </Provider>,
+  document.getElementById('root')
+);
