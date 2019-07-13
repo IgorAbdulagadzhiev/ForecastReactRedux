@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import CityListItem from '../city-list-item';
 import { connect } from 'react-redux';
 
@@ -8,22 +8,30 @@ import { compose } from 'redux';
 
 import Spinner from '../spinner';
 
-class CityList extends Component {
+const CityList = ({ search, weatherService,
+   locationSearchLoaded, cities, loading }) => {
 
-  componentDidMount() {
-    const { weatherService, locationSearchLoaded } = this.props;
-    weatherService.getCities('m')
+  useEffect(() => {
+    console.log('запрос!');
+    // здесь вероятно плохой код, но мне надо было прекратить отправлять запрос
+    // при пустой строке и монтировании,а я спустя полчаса поиска ничего лучше
+    // придумал
+    if(search === '') {
+      locationSearchLoaded([]);
+      return;
+    }
+    weatherService.getCities(search)
       .then((data) => {
         locationSearchLoaded(data);
-      });
-  }
-
-  render() {
-    const  { cities, loading } = this.props;
+      })
+  }, [search]);
+  // вероятно ругается из-за hoc, потому что инициализируется вне эффекта.
+  // нужно будет исправить.
 
     if (loading) {
       return <Spinner />
     }
+
     return (
       <ul>
         {
@@ -35,11 +43,10 @@ class CityList extends Component {
         }
       </ul>
     );
-  }
 }
 
-const mapStateToProps = ({ cities, loading }) => {
-  return { cities, loading };
+const mapStateToProps = ({ cities, loading, search }) => {
+  return { cities, loading, search };
 };
 
 const mapDispatchToProps = {

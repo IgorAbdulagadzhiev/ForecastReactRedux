@@ -1,10 +1,28 @@
 import React from 'react'
 import CityList from '../city-list';
+import SearchInput from '../search-input';
+import { connect } from 'react-redux';
 
-const SearchPage = () => {
+import { searchChange } from '../../actions';
+
+const SearchPage = (props) => {
+  const { search, searchChange } = props;
   return (
-    <CityList />
+    <>
+      <SearchInput title='adalkdaw' value={search} searchChange={searchChange} />
+      <CityList />
+    </>
   );
 };
 
-export default SearchPage;
+
+
+const mapStateToProps = ({ search }) => {
+  return { search };
+};
+
+const mapDispatchToProps = {
+  searchChange
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

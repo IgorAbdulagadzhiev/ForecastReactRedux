@@ -1,11 +1,12 @@
 import React from 'react';
+import FavoriteButton from '../favorite-button';
 
 const CityListItem = ({ city }) => {
   const { title, woeid } = city;
   return (
     <>
       <span>{ title }</span>
-      <span>{ woeid }</span>
+      <FavoriteButton id={woeid} />
     </>
   );
 };

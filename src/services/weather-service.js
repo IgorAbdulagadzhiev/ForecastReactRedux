@@ -1,6 +1,6 @@
 export default class WeatherService {
 
-  getCities = async (cityName = 'Moscow') => {
+  getCities = async (cityName) => {
     const res = await fetch(`/api/location/search/?query=${cityName}`);
 
     if (!res.ok) {
