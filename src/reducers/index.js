@@ -23,6 +23,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         favorites: [...state.favorites, action.payload]
       }
+    case 'DELETE_FROM_FAVORITES':
+      return {
+        ...state,
+        favorites: [...action.payload]
+      }
+    case 'INITIAL_FAVORITES':
+      return {
+        ...state,
+        favorites: [...action.payload],
+      }
 
     default:
       return state;

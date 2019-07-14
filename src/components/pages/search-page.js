@@ -9,7 +9,7 @@ const SearchPage = (props) => {
   const { search, searchChange } = props;
   return (
     <>
-      <SearchInput title='adalkdaw' value={search} searchChange={searchChange} />
+      <SearchInput title='Search' value={search} searchChange={searchChange} />
       <CityList />
     </>
   );

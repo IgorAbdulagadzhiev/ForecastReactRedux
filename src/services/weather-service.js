@@ -6,6 +6,12 @@ export default class WeatherService {
     if (!res.ok) {
       throw new Error('Could not fetch');
     }
-    return await res.json();
-  } 
+    const data = await res.json();
+    return data.map((item) => {
+      return {
+        ...item,
+        disabled: false
+      }
+    });
+  }
 }

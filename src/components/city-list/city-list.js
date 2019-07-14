@@ -12,11 +12,10 @@ const CityList = ({ search, weatherService,
    locationSearchLoaded, cities, loading }) => {
 
   useEffect(() => {
-    console.log('запрос!');
     // здесь вероятно плохой код, но мне надо было прекратить отправлять запрос
     // при пустой строке и монтировании,а я спустя полчаса поиска ничего лучше
     // придумал
-    if(search === '') {
+    if(search.length === 0) {
       locationSearchLoaded([]);
       return;
     }
