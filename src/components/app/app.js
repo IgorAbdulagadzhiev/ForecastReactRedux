@@ -6,10 +6,10 @@ import { initialFavorites } from '../../actions';
 
 import Header from '../header';
 
-const App = ({favorites, initialFavorites}) => {
+const App = ({initialFavorites}) => {
   useEffect(() => {
     initialFavorites(JSON.parse(localStorage.getItem('favorites')) || []);
-  }, []);
+  }, [initialFavorites]);
   return (
     <main role='main'>
       <Header />
@@ -25,8 +25,11 @@ const App = ({favorites, initialFavorites}) => {
         exact />
 
         <Route
-        path='/forecast'
-        component={ForecastPage}
+        path='/forecast/:id'
+        render={({ match }) => {
+          const { id } = match.params;
+        return <ForecastPage itemId={id}/>}
+      }
         exact />
       </Switch>
     </main>

@@ -14,4 +14,14 @@ export default class WeatherService {
       }
     });
   }
+
+  getWeather = async (woeid) => {
+    const res = await fetch(`/api/location/${woeid}/`);
+
+    if (!res.ok) {
+      throw new Error('Could not fetch');
+    }
+    
+    return await res.json();
+  }
 }

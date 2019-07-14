@@ -7,6 +7,7 @@ import App from './components/app';
 import ErrorBoundry from './components/error-boundry';
 import WeatherService from './services/weather-service';
 import { WeatherServiceProvider } from './components/weather-service-context';
+import 'normalize.css';
 
 import store from './store';
 

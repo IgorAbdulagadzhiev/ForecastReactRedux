@@ -3,18 +3,20 @@ import CityListItem from '../city-list-item';
 import { connect } from 'react-redux';
 
 import { withWeatherService } from '../hoc';
-import { locationSearchLoaded } from '../../actions';
+import { locationSearchLoaded,
+  locationSearchRequested,
+  locationSearchError } from '../../actions';
 import { compose } from 'redux';
+import ErrorIndicator from '../error-indicator';
 
 import Spinner from '../spinner';
 
 const CityList = ({ search, weatherService,
-   locationSearchLoaded, cities, loading }) => {
+   locationSearchLoaded, cities, loading,
+    locationSearchRequested, locationSearchError, error }) => {
 
   useEffect(() => {
-    // здесь вероятно плохой код, но мне надо было прекратить отправлять запрос
-    // при пустой строке и монтировании,а я спустя полчаса поиска ничего лучше
-    // придумал
+    locationSearchRequested();
     if(search.length === 0) {
       locationSearchLoaded([]);
       return;
@@ -23,12 +25,19 @@ const CityList = ({ search, weatherService,
       .then((data) => {
         locationSearchLoaded(data);
       })
-  }, [search]);
-  // вероятно ругается из-за hoc, потому что инициализируется вне эффекта.
-  // нужно будет исправить.
+      .catch((err) => locationSearchError(err));
+
+      return () => {
+        locationSearchLoaded([]);
+      }
+  }, [search, locationSearchError, locationSearchLoaded, locationSearchRequested, weatherService]);
 
     if (loading) {
-      return <Spinner />
+      return <Spinner />;
+    }
+
+    if (error) {
+      return <ErrorIndicator />;
     }
 
     return (
@@ -44,12 +53,14 @@ const CityList = ({ search, weatherService,
     );
 }
 
-const mapStateToProps = ({ cities, loading, search }) => {
-  return { cities, loading, search };
+const mapStateToProps = ({ cities, loading, search, error }) => {
+  return { cities, loading, search, error };
 };
 
 const mapDispatchToProps = {
-  locationSearchLoaded
+  locationSearchLoaded,
+  locationSearchRequested,
+  locationSearchError,
 };
 
 export default compose(

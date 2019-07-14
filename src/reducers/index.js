@@ -1,18 +1,39 @@
 const initialState = {
   cities: [],
-  loading: false,
+  loading: true,
   search: '',
   favorites: [],
+  woeid: null,
+  error: null,
+  cityWeather: {
+    consolidated_weather: [],
+  },
 };
 
 const reducer = (state = initialState, action) => {
   switch ( action.type) {
+    case 'LOCATION_SEARCH_REQUESTED':
+      return {
+        ...state,
+        cities: [],
+        loading: true,
+        error: null
+      }
     case 'LOCATION_SEARCH_LOADED':
       return {
         ...state,
         cities: action.payload,
-        loading: false
+        loading: false,
+        error: null,
       };
+    case 'LOCATION_SEARCH_ERROR':
+      return {
+        ...state,
+        cities: [],
+        loading: false,
+        error: action.payload
+      }
+      
     case 'SEARCH_CHANGE':
       return {
         ...state,
@@ -33,6 +54,34 @@ const reducer = (state = initialState, action) => {
         ...state,
         favorites: [...action.payload],
       }
+    case 'ADD_ID':
+      return {
+        ...state,
+        woeid: action.payload
+      }
+    case 'CITY_WEATHER_LOADED':
+      return {
+        ...state,
+        cityWeather: action.payload
+      }
+    case 'CITY_WEATHER_REQUESTED':
+      return {
+        ...state,
+        cityWeather: {
+          consolidated_weather: [],
+        },
+        loading: true,
+        error: null
+      }
+    case 'CITY_WEATHER_ERROR':
+      return {
+        ...state,
+        cityWeather: {
+          consolidated_weather: [],
+        },
+        loading: false,
+        error: action.payload
+          }
 
     default:
       return state;
