@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import CityListItem from '../city-list-item';
 import { connect } from 'react-redux';
 
+import styled from 'styled-components';
+
 import { withWeatherService } from '../hoc';
 import { locationSearchLoaded,
   locationSearchRequested,
@@ -41,15 +43,15 @@ const CityList = ({ search, weatherService,
     }
 
     return (
-      <ul>
+      <StyledList>
         {
           cities.map((city) => {
             return (
-              <li key={city.woeid}><CityListItem city={city} /></li>
+              <StyledListItem key={city.woeid}><CityListItem city={city} /></StyledListItem>
             )
           })
         }
-      </ul>
+      </StyledList>
     );
 }
 
@@ -62,6 +64,21 @@ const mapDispatchToProps = {
   locationSearchRequested,
   locationSearchError,
 };
+
+const StyledList = styled.ul`
+  margin: 50px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  list-style: none;
+`;
+
+const StyledListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
 
 export default compose(
   withWeatherService(),

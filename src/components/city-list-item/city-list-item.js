@@ -1,6 +1,7 @@
 import React from 'react';
 import FavoriteButton from '../favorite-button';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { addID } from '../../actions';
 
@@ -16,7 +17,7 @@ const CityListItem = ({ city, favorites }) => {
   const disabled = isDisable(city, favorites);
   return (
     <>
-      <Link to={`/forecast/${woeid}`} onClick={() => {addID(woeid)}}>{ title }</Link>
+      <StyledLink to={`/forecast/${woeid}`} onClick={() => {addID(woeid)}}>{ title }</StyledLink>
       <FavoriteButton id={woeid} disabled={disabled} />
     </>
   );
@@ -29,5 +30,15 @@ const mapStateToProps = ({favorites}) => {
 const mapDispatchToProps = {
   addID
 }
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  font-size: 20px;
+  color: #000000;
+
+  &:hover {
+    color: blue;
+  }
+`;
 
 export default connect(mapStateToProps, mapDispatchToProps)(CityListItem);

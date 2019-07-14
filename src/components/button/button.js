@@ -19,7 +19,13 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    border: 3px solid blue;
+    border: 2px solid blue;
+    color: blue;
+  }
+  &:disabled {
+    border: 2px solid gray;
+    color: gray;
+    cursor: default;
   }
 `; 
 

@@ -1,6 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const WeatherListItem = ({day, title}) => {
+const WeatherListItem = ({day}) => {
   const {
     weather_state_name: name,
     weather_state_abbr: abbr,
@@ -9,15 +10,45 @@ const WeatherListItem = ({day, title}) => {
   } = day;
   return (
     <div>
-      <h3>{title}</h3>
-      <div>
-        <img src={`/static/img/weather/png/64/${abbr}.png`} alt={`${name} icon`}></img>
-        <span>{name}</span>
-        <span>{temp.toFixed(1)}</span>
-        <span>{date}</span>
-      </div>
+      <DateDiv>
+        <img width={48} height={48} src={`/static/img/weather/${abbr}.svg`} alt={`${name} icon`}></img>
+        <StyledDate>{date}</StyledDate>
+      </DateDiv>
+
+      <DegDiv>
+        <StyledWeather>{name}</StyledWeather>
+        <StyledDeg>{temp.toFixed(1)} ℃</StyledDeg>
+      </DegDiv>
     </div>
   )
 }
+
+const DateDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const StyledWeather = styled.span`
+  font-size: 18px;
+`;
+
+const DegDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 10px;
+`;
+
+const StyledDeg = styled.span`
+  font-size: 18px;
+`;
+
+const StyledDate = styled.h3`
+  margin-left: 10px;
+`;
 
 export default WeatherListItem;

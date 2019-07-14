@@ -74,6 +74,7 @@ const reducer = (state = initialState, action) => {
         error: null
       }
     case 'CITY_WEATHER_ERROR':
+      console.log('ERROR');
       return {
         ...state,
         cityWeather: {
